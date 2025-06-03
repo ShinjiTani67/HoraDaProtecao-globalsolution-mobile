@@ -1,33 +1,19 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, TextInput, View } from 'react-native';
-import { SafeAreaView } from 'react-native-safe-area-context';
-import { Slot, Stack } from 'expo-router';
+import { Stack } from 'expo-router';
 import { useColorScheme } from 'react-native';
-import React, { useState } from 'react';
+import { ThemeProvider } from '@react-navigation/native';
+import { DarkTheme, DefaultTheme } from '@react-navigation/native';
+import React from 'react';
 
-
-const RootLayout = () => {
-  const [searchQuery, setSearchQuery] = useState('');
-
-  return (
-    <SafeAreaView style={styles.container}>
-      <StatusBar style="auto" />
-      <Slot />
-    </SafeAreaView>
-  );
-};
-
-function _Layout() {
+export default function Layout() {
   const colorScheme = useColorScheme();
 
   return (
     <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
-      <Stack>
-        <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-        <Stack.Screen name="modal" options={{ presentation: 'modal' }} />
-      </Stack>
+      <Stack
+        screenOptions={{
+          headerShown: false,
+        }}
+      />
     </ThemeProvider>
   );
 }
-
-export default RootLayout;

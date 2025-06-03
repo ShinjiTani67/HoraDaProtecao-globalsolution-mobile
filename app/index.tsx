@@ -1,7 +1,11 @@
 import React from 'react';
 import {View,Text,TextInput,TouchableOpacity,StyleSheet} from 'react-native';
+import { useRouter } from 'expo-router';
 
 const index = () => {
+
+    const router = useRouter();
+    
     return (
         <View style={styles.container}>
           <Text style={styles.loginLabel}>login</Text>
@@ -12,7 +16,7 @@ const index = () => {
             <Text style={styles.buttonText}>entrar</Text>
           </TouchableOpacity>
     
-          <Text style={styles.link}>faça cadastro clicando aqui</Text>
+          <Text onPress={() => router.push('/cadastro')} style={styles.link}>faça cadastro clicando aqui</Text>
         </View>
       );
     };
