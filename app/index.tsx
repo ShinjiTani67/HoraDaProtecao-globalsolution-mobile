@@ -8,7 +8,6 @@ const index = () => {
     
           <TextInput style={styles.input} placeholder="user:" />
           <TextInput style={styles.input} placeholder="password:" secureTextEntry />
-    
           <TouchableOpacity style={styles.button}>
             <Text style={styles.buttonText}>entrar</Text>
           </TouchableOpacity>

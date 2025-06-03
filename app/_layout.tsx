@@ -30,4 +30,4 @@ function _Layout() {
   );
 }
 
-export default _layout;
+export default RootLayout;
