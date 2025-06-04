@@ -1,31 +1,44 @@
-import * as React from 'react';
-import {View,Text,TextInput,TouchableOpacity,StyleSheet} from 'react-native';
+import React from 'react';
+import { View, Text, StyleSheet, Image, Dimensions, Pressable } from 'react-native';
+import MapView, { Marker } from 'react-native-maps';
 import { useRouter } from 'expo-router';
 
 
-const HomeScreen = () => {
+export default function HomeScreen() {
+  const router = useRouter();
   return (
     <View style={styles.container}>
       <Text style={styles.title}>home</Text>
 
       <Image
-        source={require('../assets/user-icon.png')}
+        source={require('@/assets/user-icon.png')} // substitua com o caminho real do seu ícone
         style={styles.userIcon}
       />
       <Text style={styles.username}>username</Text>
+      <Text style={styles.subText}>você está aqui</Text>
 
-      <Text style={styles.locationLabel}>você está aqui</Text>
+      <MapView
+        style={styles.map}
+        initialRegion={{
+          latitude: -23.55052,
+          longitude: -46.633308,
+          latitudeDelta: 0.0922,
+          longitudeDelta: 0.0421,
+        }}
+      >
+        <Marker
+          coordinate={{ latitude: -23.55052, longitude: -46.633308 }}
+          title="Você está aqui"
+        />
+      </MapView>
 
-      <Image
-        source={require('../assets/map-placeholder.jpg')} 
-        style={styles.mapImage}
-        resizeMode="cover"
-      />
-
-      <View style={styles.linkContainer}>
-        <Text style={styles.linkText}>áreas de risco</Text>
-        <Text style={styles.linkText}>proximas de você</Text>
-      </View>
+      <Pressable onPress={() => router.push('/areaderisco')}>
+        <Text style={styles.link}>áreas de risco</Text>
+        <Text style={styles.link}>proximas de você</Text>
+      </Pressable>
+    </View>
+  );
+}
     </View>
   );
 };
