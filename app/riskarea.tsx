@@ -1,5 +1,6 @@
 import * as React from 'react';
 import { View, Text, Image, StyleSheet, ScrollView } from 'react-native';
+import MapView, { Marker } from 'react-native-maps';
 
 const RiskAreaScreen = () => {
   return (
@@ -7,11 +8,22 @@ const RiskAreaScreen = () => {
       <Text style={styles.title}>áreas de risco</Text>
       <Text style={styles.subtitle}>proximas de você</Text>
 
-      <Image
-        source={require('../assets/map-placeholder.jpg')} // use mesma imagem do mapa
-        style={styles.mapImage}
-        resizeMode="cover"
-      />
+      <MapView
+        style={styles.map}
+        initialRegion={{
+          latitude: -23.55052, // São Paulo como exemplo
+          longitude: -46.633308,
+          latitudeDelta: 0.0922,
+          longitudeDelta: 0.0421,
+        }}
+      >
+
+         <Marker
+          coordinate={{ latitude: -23.55052, longitude: -46.633308 }}
+          title="Área de risco"
+          description="Cuidado com alagamentos"
+        />
+      </MapView>
 
       <Text style={styles.infoTitle}>informações</Text>
 
