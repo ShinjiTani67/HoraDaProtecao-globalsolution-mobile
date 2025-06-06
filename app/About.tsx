@@ -8,10 +8,15 @@ const About = () => {
         <View style={styles.container}> 
         <Text style={styles.title}>About</Text>
         <Text>Carlos Eduardo Ariza</Text>
-        <Text>RM</Text>
+        <Text>RM553461</Text>
+        <Image
+        source={require('@/assets/images/fernando.jpg')}
+        style={styles.userIcon}
+      />
         <Text>Fernando Tanigushi</Text>¨
         <Text>RM553587</Text>
         <Text>João Vitor Valaitis</Text>
+        <Text>RM</Text>
         <Text></Text>
       </View>
     )
@@ -23,6 +28,11 @@ const styles = StyleSheet.create({
       backgroundColor: '#fff',
       paddingHorizontal: 30,
       justifyContent: 'center',
+    },
+    userIcon: {
+      width: 100,
+      height: 100,
+      marginBottom: 10,
     },
     title: {
         fontFamily: 'Jost',
