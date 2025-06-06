@@ -1,26 +1,70 @@
-import React from 'react';
-import {View,Text,TextInput,TouchableOpacity,StyleSheet} from 'react-native';
+import React, { useState } from 'react';
+import {View,Text,TextInput,TouchableOpacity,StyleSheet,Alert} from 'react-native';
 import { useRouter } from 'expo-router';
+import { signInWithEmailAndPassword } from 'firebase/auth';
+import { auth } from '../services/firebaseConfig';
+
+
 
 const index = () => {
 
-    const router = useRouter();
-    
-    return (
-        <View style={styles.container}>
-          <Text style={styles.loginLabel}>login</Text>
-    
-          <TextInput style={styles.input} placeholder="user:" />
-          <TextInput style={styles.input} placeholder="password:" secureTextEntry />
-          <TouchableOpacity style={styles.button}>
-            <Text style={styles.buttonText}>entrar</Text>
-          </TouchableOpacity>
-    
-          <Text onPress={() => router.push('/cadastro')} style={styles.link}>faça cadastro clicando aqui</Text>
-        </View>
-      );
-    };
+  const router = useRouter();
+  const [email, setEmail] = useState('');
+  const [senha, setSenha] = useState('');
+  const [loading, setLoading] = useState(false);
 
+  const handleLogin = async () => {
+    if (!email || !senha) {
+      Alert.alert('Erro', 'Preencha todos os campos.');
+      return;
+    }
+
+    try {
+      setLoading(true);
+      await signInWithEmailAndPassword(auth, email, senha);
+      router.replace('/homescreen');
+    } catch (error: any) {
+      let message = 'Erro ao fazer login.';
+      if (error.code === 'auth/user-not-found') message = 'Usuário não encontrado.';
+      else if (error.code === 'auth/wrong-password') message = 'Senha incorreta.';
+      Alert.alert('Erro', message);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+    
+  return (
+    <View style={styles.container}>
+      <Text style={styles.loginLabel}>login</Text>
+
+      <TextInput
+        style={styles.input}
+        placeholder="user:"
+        autoCapitalize="none"
+        value={email}
+        onChangeText={setEmail}
+      />
+      <TextInput
+        style={styles.input}
+        placeholder="password:"
+        secureTextEntry
+        value={senha}
+        onChangeText={setSenha}
+      />
+
+      <TouchableOpacity style={styles.button} onPress={handleLogin} disabled={loading}>
+        <Text style={styles.buttonText}>
+          {loading ? 'Carregando...' : 'Entrar'}
+        </Text>
+      </TouchableOpacity>
+
+      <Text onPress={() => router.push('/cadastro')} style={styles.link}>
+        faça cadastro clicando aqui
+      </Text>
+    </View>
+  );
+};
 
     const styles = StyleSheet.create({
         container: {
