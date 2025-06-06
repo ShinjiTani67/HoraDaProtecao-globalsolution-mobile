@@ -11,7 +11,7 @@ export default function HomeScreen() {
       <Text style={styles.title}>home</Text>
 
       <Image
-        source={require('@/assets/user-icon.png')} // substitua com o caminho real do seu ícone
+        source={require('@/assets/images/user-profile-icon-free-vector.jpg')}
         style={styles.userIcon}
       />
       <Text style={styles.username}>username</Text>
