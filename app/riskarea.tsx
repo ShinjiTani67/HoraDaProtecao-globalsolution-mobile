@@ -7,9 +7,7 @@ const RiskAreaScreen = () => {
     <ScrollView contentContainerStyle={styles.container}>
       <Text style={styles.title}>áreas de risco</Text>
       <Text style={styles.subtitle}>proximas de você</Text>
-
-      
-
+      <Image></Image>
       <MapView
         style={styles.map}
         initialRegion={{

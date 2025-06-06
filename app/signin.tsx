@@ -1,10 +1,10 @@
 import React from 'react';
 import { View, Text, TextInput, TouchableOpacity, StyleSheet, ScrollView } from 'react-native';
 
-const Cadastro = () => {
+const SignIn = () => {
   return (
     <ScrollView contentContainerStyle={styles.container}>
-      <Text style={styles.title}>cadastro</Text>
+      <Text style={styles.title}>Cadastro</Text>
 
       <TextInput style={styles.input} placeholder="user:" />
       <TextInput style={styles.input} placeholder="senha:" secureTextEntry />
@@ -54,5 +54,3 @@ const styles = StyleSheet.create({
       color: '#000',
     },
   });
-  
-export default Cadastro;
