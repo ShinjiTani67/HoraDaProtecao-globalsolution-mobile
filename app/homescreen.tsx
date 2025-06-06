@@ -15,7 +15,7 @@ export default function HomeScreen() {
         style={styles.userIcon}
       />
       <Text style={styles.username}>username</Text>
-      <Text style={styles.subText}>você está aqui</Text>
+      <Text>você está aqui</Text>
 
       <MapView
         style={styles.map}
@@ -32,16 +32,13 @@ export default function HomeScreen() {
         />
       </MapView>
 
-      <Pressable onPress={() => router.push('/areaderisco')}>
-        <Text style={styles.link}>áreas de risco</Text>
-        <Text style={styles.link}>proximas de você</Text>
+      <Pressable onPress={() => router.push('/riskarea')}>
+        <Text>áreas de risco</Text>
+        <Text>proximas de você</Text>
       </Pressable>
     </View>
   );
 }
-    </View>
-  );
-};
 
 const styles = StyleSheet.create({
   container: {
@@ -73,7 +70,7 @@ const styles = StyleSheet.create({
     marginBottom: 20,
     color: '#000',
   },
-  mapImage: {
+  map: {
     width: '100%',
     height: 180,
     borderRadius: 8,
@@ -90,6 +87,3 @@ const styles = StyleSheet.create({
     lineHeight: 20,
   },
 });
-
-
-export default HomeScreen;
