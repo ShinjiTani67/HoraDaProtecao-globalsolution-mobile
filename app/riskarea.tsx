@@ -45,6 +45,12 @@ const styles = StyleSheet.create({
     paddingTop: 60,
     paddingBottom: 40,
   },
+  map: {
+    width: '100%',
+    height: 200,
+    borderRadius: 8,
+    marginBottom: 30,
+  },
   title: {
     fontFamily: 'Jost',
     fontSize: 24,
