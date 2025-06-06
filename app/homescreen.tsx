@@ -4,7 +4,7 @@ import MapView, { Marker } from 'react-native-maps';
 import { useRouter } from 'expo-router';
 
 
-export default function HomeScreen() {
+const HomeScreen = () => {
   const router = useRouter();
   return (
     <View style={styles.container}>

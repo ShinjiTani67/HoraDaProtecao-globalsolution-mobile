@@ -6,7 +6,7 @@ import { auth } from '../services/firebaseConfig';
 
 
 
-const index = () => {
+const Index = () => {
 
   const router = useRouter();
   const [email, setEmail] = useState('');
@@ -62,6 +62,8 @@ const index = () => {
       <Text onPress={() => router.push('/cadastro')} style={styles.link}>
         faça cadastro clicando aqui
       </Text>
+      
+      <Text onPress={() => router.push('/about')} style={styles.link}>Sobre</Text>
     </View>
   );
 };
@@ -105,4 +107,4 @@ const index = () => {
         },
       });
       
-      export default index;
+      export default Index;
