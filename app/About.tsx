@@ -7,6 +7,10 @@ const About = () => {
     return (
         <View style={styles.container}> 
         <Text style={styles.title}>About</Text>
+            <Image
+        source={require('@/assets/images/cadu.jpg')}
+        style={styles.userIcon}
+      />
         <Text>Carlos Eduardo Ariza</Text>
         <Text>RM553461</Text>
         <Image
@@ -15,6 +19,10 @@ const About = () => {
       />
         <Text>Fernando Tanigushi</Text>¨
         <Text>RM553587</Text>
+            <Image
+        source={require('@/assets/images/joao.jpg')}
+        style={styles.userIcon}
+      />
         <Text>João Vitor Valaitis</Text>
         <Text>RM</Text>
         <Text></Text>
