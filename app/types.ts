@@ -1,7 +1,7 @@
 declare module "expo-router" {
   type RouteNames = 
     | "index"
-    | "homescreen"
+    | "HomeScreen"
     | "signin"
     | "about"
     | "riskarea"

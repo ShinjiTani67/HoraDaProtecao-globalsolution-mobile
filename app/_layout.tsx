@@ -3,9 +3,23 @@ import { StatusBar } from 'expo-status-bar';
 import { useColorScheme } from 'react-native';
 import { ThemeProvider } from '@react-navigation/native';
 import { DarkTheme, DefaultTheme } from '@react-navigation/native';
-import React from 'react';
+import React, { useEffect } from 'react';
 import { AuthProvider, useAuth } from '@/context/AuthProvider';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import firebase from '@react-native-firebase/app';
+
+// Initialize Firebase if it hasn't been initialized
+if (!firebase.apps.length) {
+  firebase.initializeApp({
+    apiKey: "AIzaSyBmJh7mewTXxUIdCXwXV_PFIpc22DagoDc",
+    authDomain: "hora-da-protecao.firebaseapp.com",
+    projectId: "hora-da-protecao",
+    storageBucket: "hora-da-protecao.firebasestorage.app",
+    messagingSenderId: "479715828390",
+    appId: "1:479715828390:android:2c9e4bfe782a4d6744ca67",
+    measurementId: "G-Q4207EHJMP"
+  });
+}
 
 function RootLayoutNav() {
   const { user } = useAuth();
@@ -42,7 +56,7 @@ function RootLayoutNav() {
             // App screens
             <>
               <Stack.Screen 
-                name="Homescreen"
+                name="HomeScreen"
                 options={{
                   headerShown: false,
                   animation: 'slide_from_right'
