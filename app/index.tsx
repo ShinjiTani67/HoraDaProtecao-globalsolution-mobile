@@ -11,11 +11,11 @@ const Index = () => {
   const [email, setEmail] = useState('');
   const [senha, setSenha] = useState('');
   const [loading, setLoading] = useState(false);
+  const [error, setError] = useState('');
 
-  // Redirect to homescreen if user is already logged in
   React.useEffect(() => {
     if (user) {
-      router.replace('/homescreen');
+      router.replace('/Homescreen');
     }
   }, [user]);
 
@@ -28,7 +28,7 @@ const Index = () => {
     try {
       setLoading(true);
       await signInWithEmailAndPassword(auth, email, senha);
-      router.replace('/homescreen');
+      router.replace('/Homescreen');
     } catch (error: any) {
       let message = 'Erro ao fazer login.';
       if (error.code === 'auth/user-not-found') message = 'Usuário não encontrado.';
@@ -72,11 +72,11 @@ const Index = () => {
         </Text>
       </TouchableOpacity>
 
-      <TouchableOpacity onPress={() => router.push('/signin')} style={styles.linkContainer}>
+      <TouchableOpacity onPress={() => router.push('/Signin')} style={styles.linkContainer}>
         <Text style={styles.link}>Faça cadastro clicando aqui</Text>
       </TouchableOpacity>
       
-      <TouchableOpacity onPress={() => router.push('/about')} style={styles.linkContainer}>
+      <TouchableOpacity onPress={() => router.push('/About')} style={styles.linkContainer}>
         <Text style={styles.link}>Sobre</Text>
       </TouchableOpacity>
     </View>

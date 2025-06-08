@@ -35,7 +35,7 @@ const HomeScreen = () => {
 
       <Pressable 
         style={styles.riskAreaButton}
-        onPress={() => router.push('/riskarea')}
+        onPress={() => router.push('/Riskarea')}
       >
         <Text style={styles.riskAreaTitle}>Áreas de risco</Text>
         <Text style={styles.riskAreaSubtitle}>Próximas de você</Text>
