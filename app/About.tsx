@@ -6,77 +6,92 @@ const About = () => {
     const router = useRouter();
     return (
         <View style={styles.container}> 
-        <Text style={styles.title}>About</Text>
-        <Image
-        source={require('@/assets/images/cadu.jpg')}
-        style={styles.userIcon}
-      />
-        <Text>Carlos Eduardo Ariza</Text>
-        <Text>RM553461</Text>
-        <Image
-        source={require('@/assets/images/fernando.jpg')}
-        style={styles.userIcon}
-      />
-        <Text>Fernando Tanigushi</Text>¨
-        <Text>RM553587</Text>
-            <Image
-        source={require('@/assets/images/joao.jpg')}
-        style={styles.userIcon}
-      />
-        <Text>João Vitor Valaitis</Text>
-        <Text>RM</Text>
-        <Text></Text>
-      </View>
-    )
-}
+            <Pressable 
+                style={styles.backButton}
+                onPress={() => router.back()}
+            >
+                <Text style={styles.backButtonText}>← Voltar</Text>
+            </Pressable>
+
+            <Text style={styles.title}>About</Text>
+            
+            <View style={styles.memberContainer}>
+                <Image
+                    source={require('@/assets/images/cadu.jpg')}
+                    style={styles.userIcon}
+                />
+                <Text style={styles.name}>Carlos Eduardo Ariza</Text>
+                <Text style={styles.rm}>RM553461</Text>
+            </View>
+
+            <View style={styles.memberContainer}>
+                <Image
+                    source={require('@/assets/images/fernando.jpg')}
+                    style={styles.userIcon}
+                />
+                <Text style={styles.name}>Fernando Tanigushi</Text>
+                <Text style={styles.rm}>RM553587</Text>
+            </View>
+
+            <View style={styles.memberContainer}>
+                <Image
+                    source={require('@/assets/images/joao.jpg')}
+                    style={styles.userIcon}
+                />
+                <Text style={styles.name}>João Vitor Valaitis</Text>
+                <Text style={styles.rm}>RM553972</Text>
+            </View>
+        </View>
+    );
+};
 
 const styles = StyleSheet.create({
     container: {
-      flex: 1,
-      backgroundColor: '#fff',
-      paddingHorizontal: 30,
-      justifyContent: 'center',
+        flex: 1,
+        backgroundColor: '#fff',
+        paddingHorizontal: 30,
+        paddingVertical: 20,
+    },
+    backButton: {
+        position: 'absolute',
+        top: 20,
+        left: 20,
+        zIndex: 1,
+    },
+    backButtonText: {
+        fontFamily: 'Jost',
+        fontSize: 16,
+        color: '#007AFF',
+    },
+    memberContainer: {
+        alignItems: 'center',
+        marginBottom: 30,
     },
     userIcon: {
-      width: 100,
-      height: 100,
-      marginBottom: 10,
+        width: 100,
+        height: 100,
+        borderRadius: 50,
+        marginBottom: 10,
     },
     title: {
         fontFamily: 'Jost',
         fontSize: 26,
-        color: '#000',
         marginBottom: 20,
-      },
-    loginLabel: {
-      fontFamily: 'Jost',
-      fontSize: 20,
-      marginBottom: 20,
-      color: '#000',
+        color: '#000',
+        textAlign: 'center',
+        marginTop: 40,
     },
-    input: {
-      height: 40,
-      borderRadius: 8,
-      backgroundColor: '#ddd',
-      paddingHorizontal: 10,
-      marginBottom: 15,
-      fontFamily: 'Jost',
+    name: {
+        fontFamily: 'Jost',
+        fontSize: 18,
+        color: '#000',
+        marginBottom: 5,
     },
-    button: {
-      marginTop: 10,
-      alignItems: 'center',
-    },
-    buttonText: {
-      fontFamily: 'Jost',
-      fontSize: 18,
-      color: '#000',
-    },
-    link: {
-      marginTop: 20,
-      fontFamily: 'Jost',
-      fontSize: 14,
-      color: 'blue',
-      textAlign: 'center',
-    },
-  });
+    rm: {
+        fontFamily: 'Jost',
+        fontSize: 16,
+        color: '#666',
+    }
+});
+
 export default About;

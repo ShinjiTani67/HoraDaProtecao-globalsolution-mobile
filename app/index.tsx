@@ -1,17 +1,23 @@
 import React, { useState } from 'react';
-import {View,Text,TextInput,TouchableOpacity,StyleSheet,Alert,Image} from 'react-native';
+import { View, Text, TextInput, TouchableOpacity, StyleSheet, Alert, Image } from 'react-native';
 import { useRouter } from 'expo-router';
 import { signInWithEmailAndPassword } from 'firebase/auth';
 import { auth } from '../services/firebaseConfig';
-
-
+import { useAuth } from '../context/AuthProvider';
 
 const Index = () => {
-
   const router = useRouter();
+  const { user } = useAuth();
   const [email, setEmail] = useState('');
   const [senha, setSenha] = useState('');
   const [loading, setLoading] = useState(false);
+
+  // Redirect to homescreen if user is already logged in
+  React.useEffect(() => {
+    if (user) {
+      router.replace('/homescreen');
+    }
+  }, [user]);
 
   const handleLogin = async () => {
     if (!email || !senha) {
@@ -33,84 +39,103 @@ const Index = () => {
     }
   };
 
-    
   return (
     <View style={styles.container}>
-      <Text style={styles.loginLabel}>login</Text>
-      <Image source={require('../assets/images/logo.png')}
-      style={styles.logo}/>
+      <Text style={styles.title}>Login</Text>
+      <Image 
+        source={require('../assets/images/logo.png')}
+        style={styles.logo}
+      />
       <TextInput
         style={styles.input}
-        placeholder="user:"
+        placeholder="Email"
         autoCapitalize="none"
+        keyboardType="email-address"
         value={email}
         onChangeText={setEmail}
       />
       <TextInput
         style={styles.input}
-        placeholder="password:"
+        placeholder="Senha"
         secureTextEntry
         value={senha}
         onChangeText={setSenha}
       />
 
-      <TouchableOpacity style={styles.button} onPress={handleLogin} disabled={loading}>
+      <TouchableOpacity 
+        style={[styles.button, loading && styles.buttonDisabled]} 
+        onPress={handleLogin} 
+        disabled={loading}
+      >
         <Text style={styles.buttonText}>
           {loading ? 'Carregando...' : 'Entrar'}
         </Text>
       </TouchableOpacity>
 
-      <Text onPress={() => router.push('/signin')} style={styles.link}>
-        faça cadastro clicando aqui
-      </Text>
+      <TouchableOpacity onPress={() => router.push('/signin')} style={styles.linkContainer}>
+        <Text style={styles.link}>Faça cadastro clicando aqui</Text>
+      </TouchableOpacity>
       
-      <Text onPress={() => router.push('/about')} style={styles.link}>Sobre</Text>
+      <TouchableOpacity onPress={() => router.push('/about')} style={styles.linkContainer}>
+        <Text style={styles.link}>Sobre</Text>
+      </TouchableOpacity>
     </View>
   );
 };
 
-    const styles = StyleSheet.create({
-        container: {
-          flex: 1,
-          backgroundColor: '#fff',
-          paddingHorizontal: 30,
-          justifyContent: 'center',
-        },
-        loginLabel: {
-          fontFamily: 'Jost',
-          fontSize: 20,
-          marginBottom: 20,
-          color: '#000',
-        },
-          logo: {
-          width: 180,
-          height: 180,
-          marginBottom: 10,
-        },
-        input: {
-          height: 40,
-          borderRadius: 8,
-          backgroundColor: '#ddd',
-          paddingHorizontal: 10,
-          marginBottom: 15,
-          fontFamily: 'Jost',
-        },
-        button: {
-          marginTop: 10,
-          alignItems: 'center',
-        },
-        buttonText: {
-          fontFamily: 'Jost',
-          fontSize: 18,
-          color: '#000',
-        },
-        link: {
-          marginTop: 20,
-          fontFamily: 'Jost',
-          fontSize: 14,
-          color: 'blue',
-          textAlign: 'center',
-        },
-      });
-      
-      export default Index;
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: '#fff',
+    paddingHorizontal: 30,
+    justifyContent: 'center',
+  },
+  title: {
+    fontFamily: 'Jost',
+    fontSize: 26,
+    marginBottom: 20,
+    color: '#000',
+    textAlign: 'center',
+  },
+  logo: {
+    width: 180,
+    height: 180,
+    marginBottom: 30,
+    alignSelf: 'center',
+  },
+  input: {
+    height: 50,
+    borderRadius: 8,
+    backgroundColor: '#f0f0f0',
+    paddingHorizontal: 15,
+    marginBottom: 15,
+    fontFamily: 'Jost',
+    fontSize: 16,
+  },
+  button: {
+    backgroundColor: '#007AFF',
+    padding: 15,
+    borderRadius: 8,
+    alignItems: 'center',
+    marginTop: 10,
+  },
+  buttonDisabled: {
+    backgroundColor: '#ccc',
+  },
+  buttonText: {
+    fontFamily: 'Jost',
+    fontSize: 18,
+    color: '#fff',
+  },
+  linkContainer: {
+    marginTop: 20,
+  },
+  link: {
+    fontFamily: 'Jost',
+    fontSize: 14,
+    color: '#007AFF',
+    textAlign: 'center',
+  },
+});
+
+export default Index;

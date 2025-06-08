@@ -3,19 +3,20 @@ import { View, Text, StyleSheet, Image, Dimensions, Pressable } from 'react-nati
 import MapView, { Marker } from 'react-native-maps';
 import { useRouter } from 'expo-router';
 
-
 const HomeScreen = () => {
   const router = useRouter();
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>home</Text>
+      <Text style={styles.title}>Home</Text>
 
-      <Image
-        source={require('../assets/images/usericon.png')}
-        style={styles.userIcon}
-      />
-      <Text style={styles.username}>username</Text>
-      <Text>você está aqui</Text>
+      <View style={styles.userSection}>
+        <Image
+          source={require('../assets/images/usericon.png')}
+          style={styles.userIcon}
+        />
+        <Text style={styles.username}>username</Text>
+        <Text style={styles.locationLabel}>Você está aqui</Text>
+      </View>
 
       <MapView
         style={styles.map}
@@ -32,13 +33,16 @@ const HomeScreen = () => {
         />
       </MapView>
 
-      <Pressable onPress={() => router.push('/riskarea')}>
-        <Text>áreas de risco</Text>
-        <Text>proximas de você</Text>
+      <Pressable 
+        style={styles.riskAreaButton}
+        onPress={() => router.push('/riskarea')}
+      >
+        <Text style={styles.riskAreaTitle}>Áreas de risco</Text>
+        <Text style={styles.riskAreaSubtitle}>Próximas de você</Text>
       </Pressable>
     </View>
   );
-}
+};
 
 const styles = StyleSheet.create({
   container: {
@@ -54,21 +58,26 @@ const styles = StyleSheet.create({
     color: '#000',
     marginBottom: 20,
   },
+  userSection: {
+    alignItems: 'center',
+    marginBottom: 20,
+  },
   userIcon: {
     width: 100,
     height: 100,
+    borderRadius: 50,
     marginBottom: 10,
   },
   username: {
     fontFamily: 'Jost',
-    fontSize: 16,
-    marginBottom: 10,
+    fontSize: 18,
+    marginBottom: 5,
+    color: '#000',
   },
   locationLabel: {
     fontFamily: 'Jost',
     fontSize: 14,
-    marginBottom: 20,
-    color: '#000',
+    color: '#666',
   },
   map: {
     width: '100%',
@@ -76,14 +85,24 @@ const styles = StyleSheet.create({
     borderRadius: 8,
     marginBottom: 30,
   },
-  linkContainer: {
+  riskAreaButton: {
     alignItems: 'center',
+    backgroundColor: '#f0f0f0',
+    padding: 15,
+    borderRadius: 8,
+    width: '100%',
   },
-  linkText: {
+  riskAreaTitle: {
+    fontFamily: 'Jost',
+    fontSize: 16,
+    color: '#000',
+    marginBottom: 5,
+  },
+  riskAreaSubtitle: {
     fontFamily: 'Jost',
     fontSize: 14,
-    color: 'blue',
-    textAlign: 'center',
-    lineHeight: 20,
+    color: '#666',
   },
 });
+
+export default HomeScreen;
