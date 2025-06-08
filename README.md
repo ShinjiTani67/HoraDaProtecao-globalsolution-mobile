@@ -5,6 +5,7 @@
 - [Integrantes]
 - [Descrição]
 - [Pitch]
+- [Video]
 - [API em Java]
 - [Instalação]   
 
@@ -34,7 +35,9 @@ Porque se prevenir é a melhor proteção.
 
 https://youtu.be/G6Fe5GhZ8vQ
 
+## Video
 
+https://youtu.be/ty0-UHNM_iM
 
 ## API em Java 
 - https://github.com/ShinjiTani67/HoraDaProtecao_Mobile_JavaAPI_CRUD.git
