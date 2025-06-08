@@ -7,7 +7,6 @@
 - [Pitch]
 - [Video]
 - [API em Java]
-- [Instalação]   
 
 ## Integrantes  
 - Carlos Eduardo RM553461
@@ -42,4 +41,3 @@ https://youtu.be/ty0-UHNM_iM
 ## API em Java 
 - https://github.com/ShinjiTani67/HoraDaProtecao_Mobile_JavaAPI_CRUD.git
 
-## Instalação
