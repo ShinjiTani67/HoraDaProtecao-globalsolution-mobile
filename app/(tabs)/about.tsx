@@ -1,17 +1,17 @@
 import { StyleSheet } from 'react-native';
-import { Text, View } from '../components/Themed';
+import { Text, View } from '../../components/Themed';
 import { Link } from 'expo-router';
 
-export default function AboutScreen() {
+export default function TabTwoScreen() {
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Sobre o Hora da Proteção</Text>
+      <Text style={styles.title}>About</Text>
       <View style={styles.separator} />
       <Text style={styles.text}>
-        O Hora da Proteção é um aplicativo desenvolvido para ajudar as pessoas a se protegerem de áreas de risco.
+        This is the about screen.
       </Text>
       <Link href="/homescreen" style={styles.link}>
-        <Text style={styles.linkText}>Voltar</Text>
+        <Text style={styles.linkText}>Go to Home Screen</Text>
       </Link>
     </View>
   );
@@ -22,7 +22,6 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
-    padding: 20,
   },
   title: {
     fontSize: 20,
@@ -46,4 +45,4 @@ const styles = StyleSheet.create({
     fontSize: 14,
     color: '#2e78b7',
   },
-});
+}); 

@@ -1,85 +1,49 @@
-import * as React from 'react';
-import { View, Text, Image, StyleSheet, ScrollView } from 'react-native';
-import MapView, { Marker } from 'react-native-maps';
+import { StyleSheet } from 'react-native';
+import { Text, View } from '../components/Themed';
+import { Link } from 'expo-router';
 
-const RiskAreaScreen = () => {
+export default function RiskAreaScreen() {
   return (
-    <ScrollView contentContainerStyle={styles.container}>
-      <Text style={styles.title}>áreas de risco</Text>
-      <Text style={styles.subtitle}>proximas de você</Text>
-      <Image></Image>
-      <MapView
-        style={styles.map}
-        initialRegion={{
-          latitude: -23.55052,
-          longitude: -46.633308,
-          latitudeDelta: 0.0922,
-          longitudeDelta: 0.0421,
-        }}
-      >
-
-         <Marker
-          coordinate={{ latitude: -23.55052, longitude: -46.633308 }}
-          title="Área de risco"
-          description="Cuidado com alagamentos"
-        />
-      </MapView>
-
-      <Text style={styles.infoTitle}>informações</Text>
-
-      <Text style={styles.infoText}>
-        O que é Lorem Ipsum?{'\n'}
-        Lorem Ipsum é simplesmente uma simulação de texto da indústria tipográfica e de
-        impressos, e vem sendo utilizado desde o século XVI, quando um impressor desconhecido
-        pegou uma bandeja de tipos e os embaralhou para fazer um livro de modelos de tipos.
-        Lorem Ipsum sobreviveu
+    <View style={styles.container}>
+      <Text style={styles.title}>Áreas de Risco</Text>
+      <View style={styles.separator} />
+      <Text style={styles.text}>
+        Aqui você pode ver as áreas de risco próximas a você.
       </Text>
-    </ScrollView>
+      <Link href="/homescreen" style={styles.link}>
+        <Text style={styles.linkText}>Voltar</Text>
+      </Link>
+    </View>
   );
-};
+}
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: '#fff',
-    paddingHorizontal: 20,
-    paddingTop: 60,
-    paddingBottom: 40,
-  },
-  map: {
-    width: '100%',
-    height: 200,
-    borderRadius: 8,
-    marginBottom: 30,
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+    padding: 20,
   },
   title: {
-    fontFamily: 'Jost',
-    fontSize: 24,
-    color: '#000',
-  },
-  subtitle: {
-    fontFamily: 'Jost',
     fontSize: 20,
-    color: '#000',
+    fontWeight: 'bold',
+  },
+  separator: {
+    marginVertical: 30,
+    height: 1,
+    width: '80%',
+  },
+  text: {
+    fontSize: 16,
+    textAlign: 'center',
     marginBottom: 20,
   },
-  mapImage: {
-    width: '100%',
-    height: 200,
-    borderRadius: 8,
-    marginBottom: 30,
+  link: {
+    marginTop: 15,
+    paddingVertical: 15,
   },
-  infoTitle: {
-    fontFamily: 'Jost',
-    fontSize: 18,
-    color: '#000',
-    marginBottom: 10,
-  },
-  infoText: {
-    fontFamily: 'Jost',
+  linkText: {
     fontSize: 14,
-    color: '#000',
-    lineHeight: 22,
+    color: '#2e78b7',
   },
 });
-
-export default RiskAreaScreen;

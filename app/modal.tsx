@@ -1,18 +1,18 @@
-import { StatusBar } from 'expo-status-bar';
-import React from 'react';
-import { Platform, StyleSheet, Text, View } from 'react-native';
-import EditScreenInfo from '@/components/EditScreenInfo';
-
+import { StyleSheet } from 'react-native';
+import { Text, View } from '../components/Themed';
+import { Link } from 'expo-router';
 
 export default function ModalScreen() {
   return (
     <View style={styles.container}>
-      <Text>Modal</Text>
+      <Text style={styles.title}>Modal</Text>
       <View style={styles.separator} />
-      <EditScreenInfo path="app/modal.tsx" />
-
-      {/* Use a light status bar on iOS to account for the black space above the modal */}
-      <StatusBar style={Platform.OS === 'ios' ? 'light' : 'auto'} />
+      <Text style={styles.text}>
+        This is a modal screen.
+      </Text>
+      <Link href="/" style={styles.link}>
+        <Text style={styles.linkText}>Close</Text>
+      </Link>
     </View>
   );
 }
@@ -31,7 +31,18 @@ const styles = StyleSheet.create({
     marginVertical: 30,
     height: 1,
     width: '80%',
-    backgroundColor:'#eee',
-    //darkColor="rgba(255,255,255,0.1)",
+  },
+  text: {
+    fontSize: 16,
+    textAlign: 'center',
+    marginBottom: 20,
+  },
+  link: {
+    marginTop: 15,
+    paddingVertical: 15,
+  },
+  linkText: {
+    fontSize: 14,
+    color: '#2e78b7',
   },
 });

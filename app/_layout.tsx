@@ -1,11 +1,23 @@
+import FontAwesome from '@expo/vector-icons/FontAwesome';
+import { DarkTheme, DefaultTheme, ThemeProvider } from '@react-navigation/native';
+import { useFonts } from 'expo-font';
 import { Stack, Redirect } from 'expo-router';
-import { StatusBar } from 'expo-status-bar';
+import * as SplashScreen from 'expo-splash-screen';
+import { useEffect } from 'react';
 import { useColorScheme } from 'react-native';
-import { ThemeProvider } from '@react-navigation/native';
-import { DarkTheme, DefaultTheme } from '@react-navigation/native';
-import React from 'react';
-import { AuthProvider, useAuth } from '../context/AuthProvider';
+import { StatusBar } from 'expo-status-bar';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import { AuthProvider, useAuth } from '../context/AuthProvider';
+
+export {
+  ErrorBoundary,
+} from 'expo-router';
+
+export const unstable_settings = {
+  initialRouteName: '(tabs)',
+};
+
+SplashScreen.preventAutoHideAsync();
 
 function RootLayoutNav() {
   const { user } = useAuth();
@@ -78,6 +90,25 @@ function RootLayoutNav() {
 }
 
 export default function RootLayout() {
+  const [loaded, error] = useFonts({
+    SpaceMono: require('../assets/fonts/SpaceMono-Regular.ttf'),
+    ...FontAwesome.font,
+  });
+
+  useEffect(() => {
+    if (error) throw error;
+  }, [error]);
+
+  useEffect(() => {
+    if (loaded) {
+      SplashScreen.hideAsync();
+    }
+  }, [loaded]);
+
+  if (!loaded) {
+    return null;
+  }
+
   return (
     <AuthProvider>
       <RootLayoutNav />
