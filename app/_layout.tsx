@@ -12,17 +12,18 @@ export default function Layout() {
 
   return (
     <AuthProvider>
-      <SafeAreaView>
+      <SafeAreaView style={{ flex: 1 }}>
         <StatusBar style="auto"/>
         <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
-        <Stack screenOptions={{headerShown: false,}}/>
-        <Stack.Screen name="index"/>
-        <Stack.Screen name="about"/>
-        <Stack.Screen name="signin"/>
-        <Stack.Screen name="homescreen"/>
-        <Stack.Screen name="zonasperigo"/>
-        <Stack.Screen name="riskarea"/>
-      </ThemeProvider>
+          <Stack screenOptions={{ headerShown: false }}>
+            <Stack.Screen name="index"/>
+            <Stack.Screen name="about"/>
+            <Stack.Screen name="signin"/>
+            <Stack.Screen name="homescreen"/>
+            <Stack.Screen name="zonasperigo"/>
+            <Stack.Screen name="riskarea"/>
+          </Stack>
+        </ThemeProvider>
       </SafeAreaView>
     </AuthProvider>
   );
