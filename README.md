@@ -1,4 +1,3 @@
-
 # Hora da proteção 
 
 ## Índice 
