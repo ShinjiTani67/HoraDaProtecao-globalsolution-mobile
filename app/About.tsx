@@ -7,7 +7,7 @@ const About = () => {
     return (
         <View style={styles.container}> 
         <Text style={styles.title}>About</Text>
-            <Image
+        <Image
         source={require('@/assets/images/cadu.jpg')}
         style={styles.userIcon}
       />

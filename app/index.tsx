@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import {View,Text,TextInput,TouchableOpacity,StyleSheet,Alert} from 'react-native';
+import {View,Text,TextInput,TouchableOpacity,StyleSheet,Alert,Image} from 'react-native';
 import { useRouter } from 'expo-router';
 import { signInWithEmailAndPassword } from 'firebase/auth';
 import { auth } from '../services/firebaseConfig';
@@ -37,7 +37,8 @@ const Index = () => {
   return (
     <View style={styles.container}>
       <Text style={styles.loginLabel}>login</Text>
-
+      <Image source={require('@/assets/images/logo.jpg')}
+      style={styles.logo}/>
       <TextInput
         style={styles.input}
         placeholder="user:"
@@ -80,6 +81,11 @@ const Index = () => {
           fontSize: 20,
           marginBottom: 20,
           color: '#000',
+        },
+          logo: {
+          width: 180,
+          height: 180,
+          marginBottom: 10,
         },
         input: {
           height: 40,
