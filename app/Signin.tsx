@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { View, Text, TextInput, TouchableOpacity, StyleSheet, ScrollView, Alert } from 'react-native';
-import { createUserWithEmailAndPassword } from 'firebase/auth';
-import { auth } from '@/services/firebaseConfig';
+import auth from '@react-native-firebase/auth';
 import { createUserProfile } from '@/services/userService';
 import { useRouter } from 'expo-router';
 
@@ -25,7 +24,7 @@ const SignIn = () => {
     try {
       setLoading(true);
       // Create auth user
-      const userCredential = await createUserWithEmailAndPassword(auth, email, senha);
+      const userCredential = await auth().createUserWithEmailAndPassword(email, senha);
       
       // Create user profile in Firestore
       await createUserProfile({
