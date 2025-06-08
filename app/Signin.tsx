@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { View, Text, TextInput, TouchableOpacity, StyleSheet, ScrollView, Alert } from 'react-native';
 import { createUserWithEmailAndPassword } from 'firebase/auth';
-import { auth } from '../services/firebaseConfig';
-import { createUserProfile } from '../services/userService';
+import { auth } from '@/services/firebaseConfig';
+import { createUserProfile } from '@/services/userService';
 import { useRouter } from 'expo-router';
 
 const SignIn = () => {
@@ -39,7 +39,7 @@ const SignIn = () => {
       });
 
       Alert.alert('Sucesso', 'Usuário cadastrado com sucesso!');
-      router.replace('/homescreen');
+      router.replace({ pathname: '/Homescreen' });
     } catch (error: any) {
       console.error(error);
       let message = 'Erro no cadastro.';

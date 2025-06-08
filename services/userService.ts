@@ -1,4 +1,4 @@
-import { db } from './firebaseConfig';
+import { db } from '@/services/firebaseConfig';
 import { doc, setDoc, getDoc, updateDoc } from 'firebase/firestore';
 
 export interface UserData {

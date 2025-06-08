@@ -2,8 +2,8 @@ import React, { useEffect, useState } from 'react';
 import { View, Text, StyleSheet, Image, Dimensions, Pressable } from 'react-native';
 import MapView, { Marker } from 'react-native-maps';
 import { useRouter, Link } from 'expo-router';
-import { useAuth } from '../context/AuthProvider';
-import { getUserProfile, UserData } from '../services/userService';
+import { useAuth } from '@/context/AuthProvider';
+import { getUserProfile, UserData } from '@/services/userService';
 
 const HomeScreen = () => {
   const router = useRouter();

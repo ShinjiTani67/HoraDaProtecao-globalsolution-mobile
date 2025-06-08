@@ -2,8 +2,8 @@ import React, { useState } from 'react';
 import { View, Text, TextInput, TouchableOpacity, StyleSheet, Alert, Image } from 'react-native';
 import { useRouter, Link } from 'expo-router';
 import { signInWithEmailAndPassword } from 'firebase/auth';
-import { auth } from '../services/firebaseConfig';
-import { useAuth } from '../context/AuthProvider';
+import { auth } from '@/services/firebaseConfig';
+import { useAuth } from '@/context/AuthProvider';
 
 const Index = () => {
   const router = useRouter();
@@ -15,7 +15,7 @@ const Index = () => {
 
   React.useEffect(() => {
     if (user) {
-      router.replace('/homescreen' as any);
+      router.replace({ pathname: '/Homescreen' });
     }
   }, [user]);
 
@@ -28,7 +28,7 @@ const Index = () => {
     try {
       setLoading(true);
       await signInWithEmailAndPassword(auth, email, senha);
-      router.replace('/homescreen' as any);
+      router.replace({ pathname: '/Homescreen' });
     } catch (error: any) {
       let message = 'Erro ao fazer login.';
       if (error.code === 'auth/user-not-found') message = 'Usuário não encontrado.';

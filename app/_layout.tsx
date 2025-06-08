@@ -4,7 +4,7 @@ import { useColorScheme } from 'react-native';
 import { ThemeProvider } from '@react-navigation/native';
 import { DarkTheme, DefaultTheme } from '@react-navigation/native';
 import React from 'react';
-import { AuthProvider, useAuth } from '../context/AuthProvider';
+import { AuthProvider, useAuth } from '@/context/AuthProvider';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
 function RootLayoutNav() {
