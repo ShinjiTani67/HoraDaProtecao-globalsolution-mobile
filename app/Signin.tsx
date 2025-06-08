@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { View, Text, TextInput, TouchableOpacity, StyleSheet, ScrollView, Alert } from 'react-native';
 import { createUserWithEmailAndPassword } from 'firebase/auth';
 import { auth } from '../services/firebaseConfig';
+import { createUserProfile } from '../services/userService';
 import { useRouter } from 'expo-router';
 
 const SignIn = () => {
@@ -23,7 +24,20 @@ const SignIn = () => {
 
     try {
       setLoading(true);
-      await createUserWithEmailAndPassword(auth, email, senha);
+      // Create auth user
+      const userCredential = await createUserWithEmailAndPassword(auth, email, senha);
+      
+      // Create user profile in Firestore
+      await createUserProfile({
+        uid: userCredential.user.uid,
+        username: user,
+        email,
+        cep,
+        cpf,
+        endereco,
+        telefone,
+      });
+
       Alert.alert('Sucesso', 'Usuário cadastrado com sucesso!');
       router.replace('/homescreen');
     } catch (error: any) {

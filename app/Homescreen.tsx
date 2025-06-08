@@ -1,10 +1,30 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { View, Text, StyleSheet, Image, Dimensions, Pressable } from 'react-native';
 import MapView, { Marker } from 'react-native-maps';
 import { useRouter } from 'expo-router';
+import { useAuth } from '../context/AuthProvider';
+import { getUserProfile, UserData } from '../services/userService';
 
 const HomeScreen = () => {
   const router = useRouter();
+  const { user } = useAuth();
+  const [userData, setUserData] = useState<UserData | null>(null);
+
+  useEffect(() => {
+    const loadUserData = async () => {
+      if (user) {
+        try {
+          const data = await getUserProfile(user.uid);
+          setUserData(data);
+        } catch (error) {
+          console.error('Error loading user data:', error);
+        }
+      }
+    };
+
+    loadUserData();
+  }, [user]);
+
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Home</Text>
@@ -14,7 +34,7 @@ const HomeScreen = () => {
           source={require('../assets/images/usericon.png')}
           style={styles.userIcon}
         />
-        <Text style={styles.username}>username</Text>
+        <Text style={styles.username}>{userData?.username || 'Carregando...'}</Text>
         <Text style={styles.locationLabel}>Você está aqui</Text>
       </View>
 
@@ -35,7 +55,7 @@ const HomeScreen = () => {
 
       <Pressable 
         style={styles.riskAreaButton}
-        onPress={() => router.push('/Riskarea')}
+        onPress={() => router.push('riskarea')}
       >
         <Text style={styles.riskAreaTitle}>Áreas de risco</Text>
         <Text style={styles.riskAreaSubtitle}>Próximas de você</Text>
