@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import { View, Text, TextInput, TouchableOpacity, StyleSheet, Alert, Image } from 'react-native';
 import { useRouter, Link } from 'expo-router';
-import auth from '@react-native-firebase/auth';
+import { signInWithEmailAndPassword } from 'firebase/auth';
+import { auth } from '@/services/firebaseConfig';
 import { useAuth } from '@/context/AuthProvider';
 
 const Index = () => {
@@ -26,7 +27,7 @@ const Index = () => {
 
     try {
       setLoading(true);
-      await auth().signInWithEmailAndPassword(email, senha);
+      await signInWithEmailAndPassword(auth, email, senha);
       router.replace({ pathname: '/HomeScreen' });
     } catch (error: any) {
       let message = 'Erro ao fazer login.';

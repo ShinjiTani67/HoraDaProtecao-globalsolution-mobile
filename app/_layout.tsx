@@ -1,25 +1,25 @@
-import { Stack, Redirect } from 'expo-router';
+import { Stack } from 'expo-router';
 import { StatusBar } from 'expo-status-bar';
 import { useColorScheme } from 'react-native';
 import { ThemeProvider } from '@react-navigation/native';
 import { DarkTheme, DefaultTheme } from '@react-navigation/native';
-import React, { useEffect } from 'react';
+import React from 'react';
 import { AuthProvider, useAuth } from '@/context/AuthProvider';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import firebase from '@react-native-firebase/app';
+import { initializeApp } from 'firebase/app';
 
-// Initialize Firebase if it hasn't been initialized
-if (!firebase.apps.length) {
-  firebase.initializeApp({
-    apiKey: "AIzaSyBmJh7mewTXxUIdCXwXV_PFIpc22DagoDc",
-    authDomain: "hora-da-protecao.firebaseapp.com",
-    projectId: "hora-da-protecao",
-    storageBucket: "hora-da-protecao.firebasestorage.app",
-    messagingSenderId: "479715828390",
-    appId: "1:479715828390:android:2c9e4bfe782a4d6744ca67",
-    measurementId: "G-Q4207EHJMP"
-  });
-}
+const firebaseConfig = {
+  apiKey: "AIzaSyBmJh7mewTXxUIdCXwXV_PFIpc22DagoDc",
+  authDomain: "hora-da-protecao.firebaseapp.com",
+  projectId: "hora-da-protecao",
+  storageBucket: "hora-da-protecao.firebasestorage.app",
+  messagingSenderId: "479715828390",
+  appId: "1:479715828390:android:2c9e4bfe782a4d6744ca67",
+  measurementId: "G-Q4207EHJMP"
+};
+
+// Initialize Firebase
+initializeApp(firebaseConfig);
 
 function RootLayoutNav() {
   const { user } = useAuth();
@@ -91,10 +91,12 @@ function RootLayoutNav() {
   );
 }
 
-export default function RootLayout() {
+const RootLayout = () => {
   return (
     <AuthProvider>
       <RootLayoutNav />
     </AuthProvider>
   );
-}
+};
+
+export default RootLayout;
