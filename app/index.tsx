@@ -1,11 +1,9 @@
 import React, { useState } from 'react';
 import { View, Text, TextInput, TouchableOpacity, StyleSheet, Alert, Image } from 'react-native';
-import { useRouter } from 'expo-router';
+import { useRouter, Link } from 'expo-router';
 import { signInWithEmailAndPassword } from 'firebase/auth';
 import { auth } from '../services/firebaseConfig';
 import { useAuth } from '../context/AuthProvider';
-
-
 
 const Index = () => {
   const router = useRouter();
@@ -17,7 +15,7 @@ const Index = () => {
 
   React.useEffect(() => {
     if (user) {
-      router.replace('/Homescreen');
+      router.replace('/homescreen' as any);
     }
   }, [user]);
 
@@ -30,7 +28,7 @@ const Index = () => {
     try {
       setLoading(true);
       await signInWithEmailAndPassword(auth, email, senha);
-      router.replace('/Homescreen');
+      router.replace('/homescreen' as any);
     } catch (error: any) {
       let message = 'Erro ao fazer login.';
       if (error.code === 'auth/user-not-found') message = 'Usuário não encontrado.';
@@ -74,13 +72,17 @@ const Index = () => {
         </Text>
       </TouchableOpacity>
 
-      <TouchableOpacity onPress={() => router.push('/Signin')} style={styles.linkContainer}>
-        <Text style={styles.link}>Faça cadastro clicando aqui</Text>
-      </TouchableOpacity>
+      <Link href={('/signin' as any)} asChild>
+        <TouchableOpacity style={styles.linkContainer}>
+          <Text style={styles.link}>Faça cadastro clicando aqui</Text>
+        </TouchableOpacity>
+      </Link>
       
-      <TouchableOpacity onPress={() => router.push('/About')} style={styles.linkContainer}>
-        <Text style={styles.link}>Sobre</Text>
-      </TouchableOpacity>
+      <Link href={('/about' as any)} asChild>
+        <TouchableOpacity style={styles.linkContainer}>
+          <Text style={styles.link}>Sobre</Text>
+        </TouchableOpacity>
+      </Link>
     </View>
   );
 };

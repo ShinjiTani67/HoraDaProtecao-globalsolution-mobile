@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { View, Text, StyleSheet, Image, Dimensions, Pressable } from 'react-native';
 import MapView, { Marker } from 'react-native-maps';
-import { useRouter } from 'expo-router';
+import { useRouter, Link } from 'expo-router';
 import { useAuth } from '../context/AuthProvider';
 import { getUserProfile, UserData } from '../services/userService';
 
@@ -53,13 +53,14 @@ const HomeScreen = () => {
         />
       </MapView>
 
-      <Pressable 
-        style={styles.riskAreaButton}
-        onPress={() => router.push('riskarea')}
-      >
-        <Text style={styles.riskAreaTitle}>Áreas de risco</Text>
-        <Text style={styles.riskAreaSubtitle}>Próximas de você</Text>
-      </Pressable>
+      <Link href={('/riskarea' as any)} asChild>
+        <Pressable style={styles.card}>
+          <Text style={styles.cardTitle}>Áreas de Risco</Text>
+          <Text style={styles.cardDescription}>
+            Visualize e reporte áreas de risco em sua região
+          </Text>
+        </Pressable>
+      </Link>
     </View>
   );
 };
@@ -105,20 +106,20 @@ const styles = StyleSheet.create({
     borderRadius: 8,
     marginBottom: 30,
   },
-  riskAreaButton: {
+  card: {
     alignItems: 'center',
     backgroundColor: '#f0f0f0',
     padding: 15,
     borderRadius: 8,
     width: '100%',
   },
-  riskAreaTitle: {
+  cardTitle: {
     fontFamily: 'Jost',
     fontSize: 16,
     color: '#000',
     marginBottom: 5,
   },
-  riskAreaSubtitle: {
+  cardDescription: {
     fontFamily: 'Jost',
     fontSize: 14,
     color: '#666',
