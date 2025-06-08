@@ -60,7 +60,7 @@ const Index = () => {
         </Text>
       </TouchableOpacity>
 
-      <Text onPress={() => router.push('/cadastro')} style={styles.link}>
+      <Text onPress={() => router.push('/signin')} style={styles.link}>
         faça cadastro clicando aqui
       </Text>
       

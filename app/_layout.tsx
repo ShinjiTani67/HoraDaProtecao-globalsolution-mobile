@@ -4,7 +4,7 @@ import { useColorScheme } from 'react-native';
 import { ThemeProvider } from '@react-navigation/native';
 import { DarkTheme, DefaultTheme } from '@react-navigation/native';
 import React from 'react';
-import { AuthProvider } from '../context/AuthProvider'; // Ajuste o caminho conforme necessário
+import { AuthProvider } from '../context/AuthProvider';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
 export default function Layout() {
@@ -18,7 +18,6 @@ export default function Layout() {
         <Stack screenOptions={{headerShown: false,}}/>
         <Stack.Screen name="index"/>
         <Stack.Screen name="about"/>
-        <Stack.Screen name="cadastro"/>
         <Stack.Screen name="signin"/>
         <Stack.Screen name="homescreen"/>
         <Stack.Screen name="zonasperigo"/>
