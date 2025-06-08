@@ -1,9 +1,8 @@
 import React, { createContext, useContext, useEffect, useState } from 'react';
-import { User, onAuthStateChanged } from 'firebase/auth';
-import { auth } from '@/services/firebaseConfig';
+import auth, { FirebaseAuthTypes } from '@react-native-firebase/auth';
 
 type AuthContextType = {
-  user: User | null;
+  user: FirebaseAuthTypes.User | null;
   loading: boolean;
 };
 
@@ -13,12 +12,12 @@ const AuthContext = createContext<AuthContextType>({
 });
 
 export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-  const [user, setUser] = useState<User | null>(null);
+  const [user, setUser] = useState<FirebaseAuthTypes.User | null>(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     try {
-      const unsubscribe = onAuthStateChanged(auth, (user) => {
+      const unsubscribe = auth().onAuthStateChanged((user) => {
         setUser(user);
         setLoading(false);
       });

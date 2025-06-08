@@ -42,7 +42,7 @@ function RootLayoutNav() {
             // App screens
             <>
               <Stack.Screen 
-                name="homescreen"
+                name="Homescreen"
                 options={{
                   headerShown: false,
                   animation: 'slide_from_right'

@@ -1,5 +1,4 @@
-import { db } from '@/services/firebaseConfig';
-import { doc, setDoc, getDoc, updateDoc } from 'firebase/firestore';
+import firestore, { FirebaseFirestoreTypes } from '@react-native-firebase/firestore';
 
 export interface UserData {
   uid: string;
@@ -9,16 +8,18 @@ export interface UserData {
   cpf: string;
   endereco: string;
   telefone: string;
-  createdAt: Date;
+  createdAt: FirebaseFirestoreTypes.Timestamp;
 }
 
 export const createUserProfile = async (userData: Omit<UserData, 'createdAt'>) => {
   try {
-    const userRef = doc(db, 'users', userData.uid);
-    await setDoc(userRef, {
-      ...userData,
-      createdAt: new Date(),
-    });
+    await firestore()
+      .collection('users')
+      .doc(userData.uid)
+      .set({
+        ...userData,
+        createdAt: firestore.Timestamp.now(),
+      });
     return true;
   } catch (error) {
     console.error('Error creating user profile:', error);
@@ -28,11 +29,13 @@ export const createUserProfile = async (userData: Omit<UserData, 'createdAt'>) =
 
 export const getUserProfile = async (uid: string) => {
   try {
-    const userRef = doc(db, 'users', uid);
-    const userSnap = await getDoc(userRef);
+    const userDoc = await firestore()
+      .collection('users')
+      .doc(uid)
+      .get();
     
-    if (userSnap.exists()) {
-      return userSnap.data() as UserData;
+    if (userDoc.exists) {
+      return userDoc.data() as UserData;
     }
     return null;
   } catch (error) {
@@ -43,8 +46,10 @@ export const getUserProfile = async (uid: string) => {
 
 export const updateUserProfile = async (uid: string, data: Partial<UserData>) => {
   try {
-    const userRef = doc(db, 'users', uid);
-    await updateDoc(userRef, data);
+    await firestore()
+      .collection('users')
+      .doc(uid)
+      .update(data);
     return true;
   } catch (error) {
     console.error('Error updating user profile:', error);

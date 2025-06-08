@@ -8,7 +8,7 @@ const About = () => {
         <View style={styles.container}> 
             <Pressable 
                 style={styles.backButton}
-                onPress={() => router.back()}
+                onPress={() => router.replace('/')}
             >
                 <Text style={styles.backButtonText}>← Voltar</Text>
             </Pressable>

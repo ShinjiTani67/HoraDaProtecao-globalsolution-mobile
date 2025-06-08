@@ -15,7 +15,7 @@ const Index = () => {
 
   React.useEffect(() => {
     if (user) {
-      router.replace({ pathname: '/Homescreen' });
+      router.replace({ pathname: '/homescreen' });
     }
   }, [user]);
 
@@ -28,7 +28,7 @@ const Index = () => {
     try {
       setLoading(true);
       await signInWithEmailAndPassword(auth, email, senha);
-      router.replace({ pathname: '/Homescreen' });
+      router.replace({ pathname: '/homescreen' });
     } catch (error: any) {
       let message = 'Erro ao fazer login.';
       if (error.code === 'auth/user-not-found') message = 'Usuário não encontrado.';
