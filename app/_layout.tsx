@@ -1,4 +1,4 @@
-import { Stack } from 'expo-router';
+import { Stack, Redirect } from 'expo-router';
 import { StatusBar } from 'expo-status-bar';
 import { useColorScheme } from 'react-native';
 import { ThemeProvider } from '@react-navigation/native';
@@ -22,8 +22,12 @@ const firebaseConfig = {
 initializeApp(firebaseConfig);
 
 function RootLayoutNav() {
-  const { user } = useAuth();
+  const { user, loading } = useAuth();
   const colorScheme = useColorScheme();
+
+  if (loading) {
+    return null; // or a loading screen
+  }
 
   return (
     <SafeAreaView style={{ flex: 1 }}>

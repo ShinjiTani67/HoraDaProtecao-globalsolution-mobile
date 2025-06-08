@@ -1,39 +1,40 @@
-import React, { useState } from 'react';
-import { View, Text, TextInput, TouchableOpacity, StyleSheet, Alert, Image } from 'react-native';
-import { useRouter, Link } from 'expo-router';
+import { View, Text, TextInput, TouchableOpacity, StyleSheet, Image, Alert, ActivityIndicator } from 'react-native';
+import { Link, router } from 'expo-router';
+import React, { useState, useEffect } from 'react';
 import { signInWithEmailAndPassword } from 'firebase/auth';
 import { auth } from '@/services/firebaseConfig';
 import { useAuth } from '@/context/AuthProvider';
 
-const Index = () => {
-  const router = useRouter();
-  const { user } = useAuth();
+export default function Index() {
   const [email, setEmail] = useState('');
   const [senha, setSenha] = useState('');
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState('');
+  const { user } = useAuth();
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (user) {
-      router.replace({ pathname: '/HomeScreen' });
+      router.replace('/HomeScreen');
     }
   }, [user]);
 
   const handleLogin = async () => {
     if (!email || !senha) {
-      Alert.alert('Erro', 'Preencha todos os campos.');
+      Alert.alert('Erro', 'Por favor, preencha todos os campos');
       return;
     }
 
+    setLoading(true);
     try {
-      setLoading(true);
       await signInWithEmailAndPassword(auth, email, senha);
-      router.replace({ pathname: '/HomeScreen' });
+      router.replace('/HomeScreen');
     } catch (error: any) {
-      let message = 'Erro ao fazer login.';
-      if (error.code === 'auth/user-not-found') message = 'Usuário não encontrado.';
-      else if (error.code === 'auth/wrong-password') message = 'Senha incorreta.';
-      Alert.alert('Erro', message);
+      let errorMessage = 'Erro ao fazer login';
+      if (error.code === 'auth/user-not-found' || error.code === 'auth/wrong-password') {
+        errorMessage = 'Email ou senha incorretos';
+      } else if (error.code === 'auth/invalid-email') {
+        errorMessage = 'Email inválido';
+      }
+      Alert.alert('Erro', errorMessage);
     } finally {
       setLoading(false);
     }
@@ -41,51 +42,58 @@ const Index = () => {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Login</Text>
-      <Image 
-        source={require('../assets/images/logo.png')}
-        style={styles.logo}
-      />
-      <TextInput
-        style={styles.input}
-        placeholder="Email"
-        autoCapitalize="none"
-        keyboardType="email-address"
-        value={email}
-        onChangeText={setEmail}
-      />
-      <TextInput
-        style={styles.input}
-        placeholder="Senha"
-        secureTextEntry
-        value={senha}
-        onChangeText={setSenha}
-      />
+      <View style={styles.logoContainer}>
+        <Image
+          source={require('@/assets/images/logo.png')}
+          style={styles.logo}
+          resizeMode="contain"
+        />
+      </View>
 
-      <TouchableOpacity 
-        style={[styles.button, loading && styles.buttonDisabled]} 
-        onPress={handleLogin} 
-        disabled={loading}
-      >
-        <Text style={styles.buttonText}>
-          {loading ? 'Carregando...' : 'Entrar'}
-        </Text>
-      </TouchableOpacity>
+      <View style={styles.formContainer}>
+        <TextInput
+          style={styles.input}
+          placeholder="Email"
+          value={email}
+          onChangeText={setEmail}
+          keyboardType="email-address"
+          autoCapitalize="none"
+        />
+        <TextInput
+          style={styles.input}
+          placeholder="Senha"
+          value={senha}
+          onChangeText={setSenha}
+          secureTextEntry
+        />
+        <TouchableOpacity 
+          style={styles.button}
+          onPress={handleLogin}
+          disabled={loading}
+        >
+          {loading ? (
+            <ActivityIndicator color="#fff" />
+          ) : (
+            <Text style={styles.buttonText}>Entrar</Text>
+          )}
+        </TouchableOpacity>
 
-      <Link href={('/signin' as any)} asChild>
-        <TouchableOpacity style={styles.linkContainer}>
-          <Text style={styles.link}>Faça cadastro clicando aqui</Text>
-        </TouchableOpacity>
-      </Link>
-      
-      <Link href={('/about' as any)} asChild>
-        <TouchableOpacity style={styles.linkContainer}>
-          <Text style={styles.link}>Sobre</Text>
-        </TouchableOpacity>
-      </Link>
+        <View style={styles.linksContainer}>
+          <Link href="/signin" asChild>
+            <TouchableOpacity>
+              <Text style={styles.link}>Criar conta</Text>
+            </TouchableOpacity>
+          </Link>
+          <Link href="/About" asChild>
+            <TouchableOpacity>
+              <Text style={styles.link}>Sobre</Text>
+            </TouchableOpacity>
+          </Link>
+        </View>
+      </View>
     </View>
   );
-};
+}
 
 const styles = StyleSheet.create({
   container: {
@@ -94,18 +102,16 @@ const styles = StyleSheet.create({
     paddingHorizontal: 30,
     justifyContent: 'center',
   },
-  title: {
-    fontFamily: 'Jost',
-    fontSize: 26,
-    marginBottom: 20,
-    color: '#000',
-    textAlign: 'center',
+  logoContainer: {
+    alignItems: 'center',
+    marginBottom: 30,
   },
   logo: {
     width: 180,
     height: 180,
-    marginBottom: 30,
-    alignSelf: 'center',
+  },
+  formContainer: {
+    // Add appropriate styles for the form container
   },
   input: {
     height: 50,
@@ -123,23 +129,19 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     marginTop: 10,
   },
-  buttonDisabled: {
-    backgroundColor: '#ccc',
-  },
   buttonText: {
     fontFamily: 'Jost',
     fontSize: 18,
     color: '#fff',
   },
-  linkContainer: {
+  linksContainer: {
     marginTop: 20,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
   },
   link: {
     fontFamily: 'Jost',
     fontSize: 14,
     color: '#007AFF',
-    textAlign: 'center',
   },
 });
-
-export default Index;

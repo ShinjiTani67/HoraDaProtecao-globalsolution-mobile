@@ -1,56 +1,44 @@
 import React, { useState } from 'react';
-import { View, Text, TextInput, TouchableOpacity, StyleSheet, ScrollView, Alert } from 'react-native';
+import { View, Text, TextInput, TouchableOpacity, StyleSheet, ScrollView, Alert, ActivityIndicator } from 'react-native';
 import { createUserWithEmailAndPassword } from 'firebase/auth';
 import { auth } from '@/services/firebaseConfig';
 import { createUserProfile } from '@/services/userService';
-import { useRouter } from 'expo-router';
+import { Link, router } from 'expo-router';
 
 const SignIn = () => {
-  const router = useRouter();
   const [email, setEmail] = useState('');
   const [senha, setSenha] = useState('');
-  const [user, setUser] = useState('');
-  const [cep, setCep] = useState('');
-  const [cpf, setCpf] = useState('');
-  const [endereco, setEndereco] = useState('');
-  const [telefone, setTelefone] = useState('');
   const [loading, setLoading] = useState(false);
 
   const handleSignUp = async () => {
-    if (!email || !senha || !user || !cep || !cpf || !endereco || !telefone) {
-      Alert.alert('Erro', 'Preencha todos os campos para continuar');
+    if (!email || !senha) {
+      Alert.alert('Erro', 'Por favor, preencha todos os campos');
       return;
     }
 
+    setLoading(true);
     try {
-      setLoading(true);
-      // Create auth user
       const userCredential = await createUserWithEmailAndPassword(auth, email, senha);
-      
-      // Create user profile in Firestore
       await createUserProfile({
         uid: userCredential.user.uid,
-        username: user,
         email,
-        cep,
-        cpf,
-        endereco,
-        telefone,
+        username: email.split('@')[0],
+        cep: '',
+        cpf: '',
+        endereco: '',
+        telefone: ''
       });
-
-      Alert.alert('Sucesso', 'Usuário cadastrado com sucesso!');
-      router.replace({ pathname: '/HomeScreen' });
+      router.replace('/HomeScreen');
     } catch (error: any) {
-      console.error(error);
-      let message = 'Erro no cadastro.';
+      let errorMessage = 'Erro ao criar conta';
       if (error.code === 'auth/email-already-in-use') {
-        message = 'Este e-mail já está em uso.';
+        errorMessage = 'Este email já está em uso';
       } else if (error.code === 'auth/invalid-email') {
-        message = 'E-mail inválido.';
+        errorMessage = 'Email inválido';
       } else if (error.code === 'auth/weak-password') {
-        message = 'A senha deve ter pelo menos 6 caracteres.';
+        errorMessage = 'A senha deve ter pelo menos 6 caracteres';
       }
-      Alert.alert('Erro no cadastro', message);
+      Alert.alert('Erro', errorMessage);
     } finally {
       setLoading(false);
     }
@@ -58,68 +46,39 @@ const SignIn = () => {
 
   return (
     <ScrollView contentContainerStyle={styles.container}>
-      <Text style={styles.title}>Cadastro</Text>
-
-      <TextInput 
-        style={styles.input} 
-        placeholder="Nome de usuário" 
-        value={user} 
-        onChangeText={setUser}
-        autoCapitalize="words"
-      />
-      <TextInput 
-        style={styles.input} 
-        placeholder="E-mail" 
+      <Text style={styles.title}>Criar Conta</Text>
+      <TextInput
+        style={styles.input}
+        placeholder="Email"
+        value={email}
+        onChangeText={setEmail}
         keyboardType="email-address"
         autoCapitalize="none"
-        value={email} 
-        onChangeText={setEmail} 
       />
-      <TextInput 
-        style={styles.input} 
-        placeholder="Senha" 
-        secureTextEntry 
-        value={senha} 
-        onChangeText={setSenha} 
+      <TextInput
+        style={styles.input}
+        placeholder="Senha"
+        value={senha}
+        onChangeText={setSenha}
+        secureTextEntry
       />
-      <TextInput 
-        style={styles.input} 
-        placeholder="CEP" 
-        keyboardType="numeric" 
-        value={cep} 
-        onChangeText={setCep} 
-      />
-      <TextInput 
-        style={styles.input} 
-        placeholder="CPF" 
-        keyboardType="numeric" 
-        value={cpf} 
-        onChangeText={setCpf} 
-      />
-      <TextInput 
-        style={styles.input} 
-        placeholder="Endereço" 
-        value={endereco} 
-        onChangeText={setEndereco}
-        autoCapitalize="words"
-      />
-      <TextInput 
-        style={styles.input} 
-        placeholder="Telefone" 
-        keyboardType="phone-pad" 
-        value={telefone} 
-        onChangeText={setTelefone} 
-      />
-
       <TouchableOpacity 
-        style={[styles.button, loading && styles.buttonDisabled]} 
+        style={styles.button}
         onPress={handleSignUp}
         disabled={loading}
       >
-        <Text style={styles.buttonText}>
-          {loading ? 'Cadastrando...' : 'Cadastrar'}
-        </Text>
+        {loading ? (
+          <ActivityIndicator color="#fff" />
+        ) : (
+          <Text style={styles.buttonText}>Criar Conta</Text>
+        )}
       </TouchableOpacity>
+
+      <Link href="/" asChild>
+        <TouchableOpacity>
+          <Text style={styles.link}>Já tem uma conta? Faça login</Text>
+        </TouchableOpacity>
+      </Link>
     </ScrollView>
   );
 };
@@ -163,6 +122,13 @@ const styles = StyleSheet.create({
     fontFamily: 'Jost',
     fontSize: 18,
     color: '#fff',
+  },
+  link: {
+    fontFamily: 'Jost',
+    fontSize: 14,
+    color: '#007AFF',
+    textAlign: 'center',
+    marginTop: 20,
   },
 });
 
