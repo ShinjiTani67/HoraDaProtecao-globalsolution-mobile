@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { View, Text, TextInput, TouchableOpacity, FlatList, Alert, StyleSheet } from 'react-native';
 import { listarZonas, criarZona, atualizarZona, deletarZona, ZonasPerigo } from '../api/zonasPerigo';
+import api from '../api/api';
 
 const ZonasPerigoScreen = () => {
   const [zonas, setZonas] = useState<ZonasPerigo[]>([]);
@@ -8,13 +9,29 @@ const ZonasPerigoScreen = () => {
   const [nivelRisco, setNivelRisco] = useState<string>('');
   const [raioEmKm, setRaioEmKm] = useState<string>('');
   const [modoEdicao, setModoEdicao] = useState<boolean>(false);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+
+  const testarConexao = async () => {
+    try {
+      setIsLoading(true);
+      const response = await api.get('/health');
+      Alert.alert('Conexão', `API está funcionando! Status: ${response.status}`);
+    } catch (error: any) {
+      Alert.alert('Erro de Conexão', `Falha ao conectar com a API: ${error.message}`);
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
   const carregarZonas = async () => {
     try {
+      setIsLoading(true);
       const res = await listarZonas();
       setZonas(res.data);
     } catch (err) {
       Alert.alert('Erro', 'Falha ao carregar zonas de perigo');
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -67,6 +84,16 @@ const ZonasPerigoScreen = () => {
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Zonas de Perigo</Text>
+
+      <TouchableOpacity 
+        style={[styles.button, styles.testButton]} 
+        onPress={testarConexao}
+        disabled={isLoading}
+      >
+        <Text style={styles.buttonText}>
+          {isLoading ? 'Testando...' : 'Testar Conexão API'}
+        </Text>
+      </TouchableOpacity>
 
       <TextInput
         style={styles.input}
@@ -172,6 +199,10 @@ const styles = StyleSheet.create({
     paddingVertical: 8,
     paddingHorizontal: 16,
     borderRadius: 5,
+  },
+  testButton: {
+    backgroundColor: '#2196F3',
+    marginBottom: 20,
   },
 });
 

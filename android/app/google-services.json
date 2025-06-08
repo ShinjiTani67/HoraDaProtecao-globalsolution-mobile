@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "479715828390",
+    "project_id": "hora-da-protecao",
+    "storage_bucket": "hora-da-protecao.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:479715828390:android:2c9e4bfe782a4d6744ca67",
+        "android_client_info": {
+          "package_name": "com.horadaprotecao"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBmJh7mewTXxUIdCXwXV_PFIpc22DagoDc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+} 

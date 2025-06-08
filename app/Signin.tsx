@@ -38,7 +38,7 @@ const SignIn = () => {
       });
 
       Alert.alert('Sucesso', 'Usuário cadastrado com sucesso!');
-      router.replace({ pathname: '/Homescreen' });
+      router.replace({ pathname: '/HomeScreen' });
     } catch (error: any) {
       console.error(error);
       let message = 'Erro no cadastro.';
