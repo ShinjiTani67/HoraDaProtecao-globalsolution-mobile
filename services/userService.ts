@@ -1,4 +1,12 @@
-import firestore, { FirebaseFirestoreTypes } from '@react-native-firebase/firestore';
+import { 
+  doc, 
+  setDoc, 
+  getDoc, 
+  updateDoc,
+  Timestamp,
+  DocumentData
+} from 'firebase/firestore';
+import { db } from './firebaseConfig';
 
 export interface UserData {
   uid: string;
@@ -8,18 +16,15 @@ export interface UserData {
   cpf: string;
   endereco: string;
   telefone: string;
-  createdAt: FirebaseFirestoreTypes.Timestamp;
+  createdAt: Timestamp;
 }
 
 export const createUserProfile = async (userData: Omit<UserData, 'createdAt'>) => {
   try {
-    await firestore()
-      .collection('users')
-      .doc(userData.uid)
-      .set({
-        ...userData,
-        createdAt: firestore.Timestamp.now(),
-      });
+    await setDoc(doc(db, 'users', userData.uid), {
+      ...userData,
+      createdAt: Timestamp.now(),
+    });
     return true;
   } catch (error) {
     console.error('Error creating user profile:', error);
@@ -29,12 +34,9 @@ export const createUserProfile = async (userData: Omit<UserData, 'createdAt'>) =
 
 export const getUserProfile = async (uid: string) => {
   try {
-    const userDoc = await firestore()
-      .collection('users')
-      .doc(uid)
-      .get();
+    const userDoc = await getDoc(doc(db, 'users', uid));
     
-    if (userDoc.exists) {
+    if (userDoc.exists()) {
       return userDoc.data() as UserData;
     }
     return null;
@@ -46,10 +48,7 @@ export const getUserProfile = async (uid: string) => {
 
 export const updateUserProfile = async (uid: string, data: Partial<UserData>) => {
   try {
-    await firestore()
-      .collection('users')
-      .doc(uid)
-      .update(data);
+    await updateDoc(doc(db, 'users', uid), data);
     return true;
   } catch (error) {
     console.error('Error updating user profile:', error);
