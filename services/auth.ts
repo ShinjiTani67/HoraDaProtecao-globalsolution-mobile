@@ -1,4 +1,4 @@
-import { createUserWithEmailAndPassword, signInWithEmailAndPassword } from 'firebase/auth';
+import { createUserWithEmailAndPassword, signInWithEmailAndPassword } from '/services/firebase';
 import { auth } from './firebaseConfig';
 
 export const signUp = (email: string, password: string) => {
