@@ -14,6 +14,7 @@ const HomeScreen = () => {
           source={require('../assets/images/usericon.png')}
           style={styles.userIcon}
         />
+        #opa
         <Text style={styles.username}>username</Text>
         <Text style={styles.locationLabel}>Você está aqui</Text>
       </View>
