@@ -37,7 +37,7 @@ const Index = () => {
   return (
     <View style={styles.container}>
       <Text style={styles.loginLabel}>login</Text>
-      <Image source={require('@/assets/images/logo.jpg')}
+      <Image source={require('../assets/images/logo.png')}
       style={styles.logo}/>
       <TextInput
         style={styles.input}

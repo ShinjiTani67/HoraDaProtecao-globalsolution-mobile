@@ -11,7 +11,7 @@ const HomeScreen = () => {
       <Text style={styles.title}>home</Text>
 
       <Image
-        source={require('../assets/iamges/usericon.png')}
+        source={require('../assets/images/usericon.png')}
         style={styles.userIcon}
       />
       <Text style={styles.username}>username</Text>
